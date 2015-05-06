@@ -1,0 +1,7 @@
+setwd("F:/Coursera/R Working Dir/ComputingforDataAnalysis/Week 2/")
+source("getmonitor.R")
+data<-getmonitor(1,"specdata")
+head(data)
+data<-getmonitor(101,"specdata",TRUE)
+head(data)
+data<-getmonitor("200","specdata")

@@ -1,0 +1,63 @@
+library(lattice)
+library(nlme)
+data(environmental)
+?environmental
+head(environmental)
+xyplot(ozone~wind,main="Ozone vs. Wind", data=environmental)
+summary(environmental$temperature)
+temp.cut<-equal.count(environmental$temperature,4)
+wind.cut=equal.count(environmental$wind,4)
+xyplot(ozone ~ radiation | temp.cut, data=environmental, main="O vs R based on T", layout=c(1,4),as.table=TRUE)
+xyplot(ozone ~ radiation | temp.cut * wind.cut, data=environmental,as.table=TRUE, pch=20,
+       panel=function(x,y,...) {
+         panel.xyplot(x,y,...)
+         panel.loess(x,y)
+       }, xlab="Solar Radiation", ylab="Ozone(ppb)",main="Ozone vs. Radiation by Temp")
+histogram(~ temperature, data=environmental)
+histogram(~ temperature | wind.cut, data=environmental)
+histogram(~ wind | temp.cut, data=environmental)
+histogram(~ ozone | temp.cut, data=environmental)
+#=================
+data(BodyWeight)
+xyplot(weight ~ Time | Diet, BodyWeight)
+#=================
+#Sample plots in ggplot2
+qplot(manufacturer,hwy,data=mpg)
+qplot(manufacturer,ct,data=mpg)
+qplot(manufacturer,cty,data=mpg)
+qplot(manufacturer,cty,col=drv,data=mpg)
+qplot(manufacturer,cty,col=fl,data=mpg)
+qplot(manufacturer,data=mpg,fill=drv)
+qplot(hwy,data=mpg,facets=drv~.,binwidth=2)
+qplot(displ,hwy,data=mpg,facets=drv~.)
+qplot(displ,hwy,data=mpg,facets=.~drv)
+qplot(hwy,displ,data=mpg,facets=.~cyl,geoms=c("points","smooth"),method="lm")
+#==================
+#Using ggplot
+g<-ggplot(mpg,aes(year,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(model,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(drv,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(cyl,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(model,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(manufacturer,hwy))
+g+geom_point()
+g<-ggplot(mpg,aes(manufacturer,cty))
+g+geom_point()+geom_smooth()
+g+geom_point()+geom_smooth(method="lm")
+g+geom_point(size=5,aes(color=drv))+geom_smooth(method="lm")
+g+geom_point(size=5,alpha=3/4,aes(color=drv))+geom_smooth(method="lm")
+g+geom_point(size=2,alpha=3/4,aes(color=drv))+geom_smooth(method="lm")+facet_wrap(cyl~drv)+labs(x="City", y="Highway")
+g+geom_point(size=5,alpha=1/4,aes(color=drv))+geom_smooth(method="lm")
+
+x<-rnorm(100)
+y<-x+rnorm(100,sd=0.5)
+plot(x, y, xlab=substitute(bar(x)==k),list(k=mean(x))),ylab=substitute(bar(y)==k), list(k=mean(y)))
+plot(x,y,main=expression(theta==0),ylab=substitute(bar(y)==k,list(k=mean(x))),xlab=substitute(hat(x)==k,list(k=median(x))))
+
+histogram(outcome[,11]
+mfrows=(c(3,1))
